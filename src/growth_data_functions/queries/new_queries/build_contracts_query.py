@@ -21,6 +21,8 @@ def build_contracts_query(
     
     query = f"""
         
+            
+        
     """
 
     return query

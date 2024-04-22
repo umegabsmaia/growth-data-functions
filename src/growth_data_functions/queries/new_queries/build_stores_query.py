@@ -20,7 +20,15 @@ def build_address_query(
         raise ValueError("project, database, and table must be non-empty strings.")
     
     query = f"""
+
+        SELECT 
+            id, 
+            zipcode, 
+            retailerId, 
+            address 
         
+        FROM `{project}.{database}.{table}`
+
     """
 
     return query

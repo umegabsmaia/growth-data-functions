@@ -24,11 +24,24 @@ def build_application_query(
         
         query = f"""
         SELECT 
-             id, borrowerId, storeId 
-        FROM 
-            `{project}.{database}.{table}`
-        WHERE status = 'APPROVED'
-        """
+            id,
+            borrowerId,
+            storeId,
+        FROM (
+            SELECT 
+                a.id,
+                a.borrowerId,
+                a.storeId,
+                a.status AS application_status,
+                ROW_NUMBER() OVER(PARTITION BY a.borrowerId ORDER BY a.createdOn) AS row_num
+            FROM 
+                `{project}.{database}.{table}` a
+            WHERE 
+                a.status = 'APPROVED'
+        ) AS ranked_apps
+        WHERE 
+        row_num = 1;
+        """ 
         return query
     
     else:

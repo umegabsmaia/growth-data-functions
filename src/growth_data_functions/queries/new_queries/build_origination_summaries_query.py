@@ -19,13 +19,13 @@ def build_origination_summaries_query(
     if project == '' or database == '' or table == '':
         raise ValueError("project, database, and table must be non-empty strings.")
     
+    # Change time to Manaus
     query = f"""
     
     SELECT 
         id, 
-        financedValue,
+        financedValue, 
         originationTimestamp,
-        createdOn,
         retailerId,
         borrowerId,
         contractId 
@@ -34,3 +34,6 @@ def build_origination_summaries_query(
     """
 
     return query
+
+
+# Fazer uma get pro cliente e uma get pras stores

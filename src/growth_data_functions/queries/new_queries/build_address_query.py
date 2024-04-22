@@ -1,7 +1,8 @@
 def build_address_query(
         project: str,
         database: str,
-        table: str
+        table: str,
+        federativeUnit: list[str]
 ) -> str:
     """
     Query to retrive the address of the clients or stores.
@@ -21,6 +22,15 @@ def build_address_query(
     
     query = f"""
         
+        SELECT 
+            
+            id,
+            zipCode,
+            federativeUnit
+             
+        FROM `{project}.{database}.{table}`
+        
+        WHERE federativeUnit IN {federativeUnit}
     """
 
     return query

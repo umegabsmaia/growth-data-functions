@@ -1,4 +1,4 @@
-def build_address_query(
+def build_stores_query(
         project: str,
         database: str,
         table: str
@@ -30,5 +30,5 @@ def build_address_query(
         FROM `{project}.{database}.{table}`
 
     """
-
+    
     return query

@@ -22,14 +22,25 @@ def build_retailer_categories_query(
     query = f"""
     
     SELECT 
-        A.retailersId, 
-        B.id, 
-        B.name, 
-        B.createdOn
-    FROM 
-        `{project}.{database}.{table}` AS A
-    LEFT JOIN 
-        `prd-ume-data.prd_datastore_public.retailer_categories` AS B ON A.retailerCategoriesId = B.id;
+        retailersId, 
+        id, 
+        name, 
+        createdOn
+    FROM (
+        SELECT
+            A.retailersId, 
+            B.id, 
+            B.name, 
+            B.createdOn,
+            ROW_NUMBER() OVER(PARTITION BY A.retailersId ORDER BY B.createdOn) AS row_num
+        FROM
+            `{project}.{database}.{table}` AS A
+        LEFT JOIN 
+            `prd-ume-data.prd_datastore_public.retailer_categories` AS B ON A.retailerCategoriesId = B.id
+    
+    ) AS rc
+    WHERE row_num = 1
+    
     """
 
     return query

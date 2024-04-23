@@ -1,4 +1,4 @@
-def build_address_query(
+def build_retailers_query(
         project: str,
         database: str,
         table: str

@@ -21,7 +21,16 @@ def build_contracts_query(
     
     query = f"""
         
+        SELECT 
+            id, 
+            borrowerId,
+            storeId, 
+            sourceProduct,
+            purchaseType 
             
+            FROM `{project}.{database}.{table}`
+            
+            WHERE canceledOn is NULL
         
     """
 

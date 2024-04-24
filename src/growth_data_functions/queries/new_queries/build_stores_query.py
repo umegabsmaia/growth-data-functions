@@ -22,10 +22,9 @@ def build_stores_query(
     query = f"""
 
         SELECT 
-            id, 
-            zipcode, 
-            retailerId, 
-            address 
+            id as storesId,
+            retailerId as retailersId, 
+            addressId 
         
         FROM `{project}.{database}.{table}`
 

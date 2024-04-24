@@ -23,7 +23,7 @@ def build_pix_query(
         WITH RankedMovimentation AS (
     SELECT 
         borrowerId, 
-        start_date, 
+        start_date,     
         end_date, 
         note, 
         rede, 

@@ -7,7 +7,6 @@ from growth_data_functions.queries.new_queries.build_address_query import build_
 warnings.filterwarnings("ignore")
 
 def get_address_data(
-    federativeUnit: list[str],
     project: str = 'prd-ume-data',
     database: str = 'prd_datastore_public',
     table: str = 'address'
@@ -48,7 +47,7 @@ def get_address_data(
     bqstorageclient = bigquery_storage.BigQueryReadClient()
 
     # create the renegotiation query
-    query = build_address_query(project, database, table,federativeUnit)
+    query = build_address_query(project, database, table)
  
     # Download the data
     df = bqclient.query(query) \

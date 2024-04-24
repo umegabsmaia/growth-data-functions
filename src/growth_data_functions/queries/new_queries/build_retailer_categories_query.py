@@ -23,7 +23,7 @@ def build_retailer_categories_query(
     
     SELECT 
         retailersId, 
-        id, 
+        id as categoriesId, 
         name, 
         createdOn
     FROM (

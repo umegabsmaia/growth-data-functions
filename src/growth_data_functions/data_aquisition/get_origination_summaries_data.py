@@ -4,11 +4,14 @@ from google.cloud import bigquery
 from google.cloud import bigquery_storage
 from growth_data_functions.queries.new_queries.build_origination_summaries_query import build_origination_summaries_query
 warnings.filterwarnings("ignore")
+from datetime import datetime, timedelta
 
 def get_retailers_data(
     project: str = 'prd-ume-data',
     database: str = 'prd_datastore_public',
-    table: str = 'origination_summaries'
+    table: str = 'origination_summaries',
+    start_date:str = "2024-01-01",
+    end_date:str = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 ) -> pd.DataFrame:
     
     """ 
@@ -46,7 +49,7 @@ def get_retailers_data(
     bqstorageclient = bigquery_storage.BigQueryReadClient()
 
     # create the renegotiation query
-    query = build_origination_summaries_query(project, database, table)
+    query = build_origination_summaries_query(project, database, table, start_date, end_date)
  
     # Download the data
     df = bqclient.query(query) \

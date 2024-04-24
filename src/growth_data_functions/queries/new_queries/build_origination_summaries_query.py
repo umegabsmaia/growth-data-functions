@@ -1,7 +1,11 @@
+from datetime import datetime, timedelta
+
 def build_origination_summaries_query(
         project: str,
         database: str,
-        table: str
+        table: str,
+        start_date:str = "2024-01-01",
+        end_date:str = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 ) -> str:
     """
     Query to retrive the base origination data.
@@ -25,12 +29,16 @@ def build_origination_summaries_query(
     SELECT 
         id, 
         financedValue, 
-        originationTimestamp,
+        DATE(`prd-ume-data.prd_datastore_public.origination_summaries`.originationTimestamp, '-04:00') as orig_date, 
         retailerId,
         borrowerId,
-        contractId 
+        contractId
         
     FROM `{project}.{database}.{table}`
+    
+    WHERE orig_date >= DATE('{start_date}')
+    AND orig_date <= DATE('{end_date}')
+    AND `prd-ume-data.prd_datastore_public.origination_summaries`.canceledOn is null
     """
 
     return query

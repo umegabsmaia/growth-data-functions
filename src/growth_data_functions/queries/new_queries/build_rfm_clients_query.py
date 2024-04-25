@@ -1,10 +1,10 @@
-def build_borrowers_query(
+def build_rfm_clients_query(
         project: str,
         database: str,
         table: str
 ) -> str:
     """
-    Query to retrive the clients data.
+    Query to retrive information about the retailers.
     
     Args:
         project (str): The bigquery project.
@@ -12,7 +12,7 @@ def build_borrowers_query(
         table (str): The table where are the clients data to retrieve.
     
     Returns:
-        query (str): A query to retrieve the clients segmentation data
+        query (str): A query to retrieve information about retailers.
     """
 
     # check for empty strings
@@ -20,10 +20,12 @@ def build_borrowers_query(
         raise ValueError("project, database, and table must be non-empty strings.")
     
     query = f"""
-    SELECT 
-        id, name, cpf, phoneNumber, email, fcmToken
-    FROM 
-        `{project}.{database}.{table}`
+
+        SELECT 
+                cpf, cohort_date, rfm_group, rfm_group_6x
+                
+                FROM `{project}.{database}.{table}`
+        
     """
 
     return query

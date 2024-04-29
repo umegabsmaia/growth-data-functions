@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.11"
 db-dtypes = "^1.1.1"
 google-cloud = "^0.34.0"
 google-cloud-bigquery = "^3.11.4"
@@ -17,6 +17,9 @@ pandas = "^2.0.0"
 
 
 [tool.poetry.dev-dependencies]
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

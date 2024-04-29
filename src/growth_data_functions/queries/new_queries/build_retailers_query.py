@@ -22,8 +22,8 @@ def build_retailers_query(
     query = f"""
 
         SELECT 
-                id as retailersId,
-                fantasyName 
+                id as retailerId,
+                fantasyName as retailerName
                 
                 FROM `{project}.{database}.{table}`
         

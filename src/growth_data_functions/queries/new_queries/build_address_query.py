@@ -23,8 +23,9 @@ def build_address_query(
         
         SELECT 
             
-            id,
-            federativeUnit
+            id as addressId,
+            federativeUnit,
+            city
             
         FROM `{project}.{database}.{table}`
     """

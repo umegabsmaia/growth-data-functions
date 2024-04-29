@@ -23,22 +23,22 @@ def build_application_query(
     if approved == True:
         
         query = f"""
-        SELECT 
-            id,
+        SELECT
             borrowerId,
-            storeId,
+            app_date
         FROM (
             SELECT 
                 a.id,
                 a.borrowerId,
                 a.storeId,
+                DATE(TIMESTAMP_SUB(a.createdOn, INTERVAL 4 HOUR)) as app_date,
                 a.status AS application_status,
                 ROW_NUMBER() OVER(PARTITION BY a.borrowerId ORDER BY a.createdOn) AS row_num
             FROM 
                 `{project}.{database}.{table}` a
             WHERE 
                 a.status = 'APPROVED'
-        ) AS ranked_apps
+        ) AS ranked_apps    
         WHERE 
         row_num = 1;
         """ 

@@ -5,7 +5,7 @@ from google.cloud import bigquery_storage
 from growth_data_functions.queries.new_queries.build_stores_query import build_stores_query
 warnings.filterwarnings("ignore")
 
-def get_retailers_data(
+def get_stores_data(
     project: str = 'prd-ume-data',
     database: str = 'prd_datastore_public',
     table: str = 'stores'

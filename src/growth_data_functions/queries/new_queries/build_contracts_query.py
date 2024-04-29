@@ -22,11 +22,10 @@ def build_contracts_query(
     query = f"""
         
         SELECT 
-            id, 
-            borrowerId,
-            storeId, 
+            id as contractId,
+            storeId,
             sourceProduct,
-            purchaseType 
+            purchaseType
             
             FROM `{project}.{database}.{table}`
             

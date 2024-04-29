@@ -6,7 +6,7 @@ from growth_data_functions.queries.clients_info_queries.build_borrowers_query im
 
 warnings.filterwarnings("ignore")
 
-def build_borrowers_query(
+def get_borrowers_data(
     project: str = 'prd-ume-data',
     database: str = 'prd_datastore_public',
     table: str = 'borrowers'

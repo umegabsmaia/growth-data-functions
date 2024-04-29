@@ -6,7 +6,7 @@ from growth_data_functions.queries.new_queries.build_origination_summaries_query
 warnings.filterwarnings("ignore")
 from datetime import datetime, timedelta
 
-def get_retailers_data(
+def get_origination_summaries_data(
     project: str = 'prd-ume-data',
     database: str = 'prd_datastore_public',
     table: str = 'origination_summaries',
@@ -28,9 +28,8 @@ def get_retailers_data(
         df (pd.DataFrame): A pandas DataFrame containing the clients data 
         retrieved from the specified BigQuery table.
 
-    Example:
-        ```{python}
-        import umebehavior 
+    Example:os.build_origination_summaries_query
+
         
         df = umebehavior.get_clients(
                 project = 'data-store-248214',
@@ -44,13 +43,13 @@ def get_retailers_data(
     if project == '' or database == '' or table == '':
         raise ValueError("project, database, and table must be non-empty strings.")
     
-    # connect bigquery
+    # connect bigquery.result() \
     bqclient = bigquery.Client(project = project)
     bqstorageclient = bigquery_storage.BigQueryReadClient()
 
     # create the renegotiation query
     query = build_origination_summaries_query(project, database, table, start_date, end_date)
- 
+
     # Download the data
     df = bqclient.query(query) \
         .result() \

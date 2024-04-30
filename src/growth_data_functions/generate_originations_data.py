@@ -4,10 +4,11 @@ import growth_data_functions.data_aquisition.get_retailers_data as rd
 import growth_data_functions.data_aquisition.get_address_data as ad
 import growth_data_functions.data_aquisition.get_stores_data as sd
 import growth_data_functions.data_aquisition.get_application_data as apd
+import growth_data_functions.data_aquisition.get_user_pix as gup
 import pandas as pd
 import numpy as np
 
-def draft_get_originations():
+def generate_originations_data():
 
     originations = os.get_origination_summaries_data()
     retailers = rd.get_retailers_data()
@@ -15,16 +16,18 @@ def draft_get_originations():
     retailers = rd.get_retailers_data()
     address = ad.get_address_data()
     stores = sd.get_stores_data()
-    application = apd.get_application_data() 
+    application = apd.get_application_data()
+    user_pix = gup.get_user_pix() 
 
     df = originations
-
+    print(df.shape)
     df = pd.merge(df, contracts,how='left',on='contractId')
-
+    
+    print(df.shape)
     df['tipo_cliente'] = np.where(df['orig_month'] == df['conv_month'], 'New', 'Recurrent')
 
     df = pd.merge(df,application,on='borrowerId',how='left')
-
+    print(df.shape)
     conditions_conv_type = [
         (df['orig_month'] == df['conv_month']) & (df['conv_date'] == df['app_date']),
         (df['orig_month'] == df['conv_month']) & (df['conv_date'] != df['app_date'])
@@ -49,13 +52,17 @@ def draft_get_originations():
 
     df['product'] = np.select(conditions_product, choices_product, default="Conventional")
 
-    df.drop(columns=['sourceProduct'], inplace = True)
-
     df = pd.merge(df,stores,on='retailerId',how='left')
-
+    print(df.shape)
     df = pd.merge(df,retailers,on='retailerId',how='left')
-
+    print(df.shape)
     df = pd.merge(df,address, on='addressId',how='left')
+    print(df.shape)
+    df = pd.merge(df,user_pix,on='borrowerId',how='left')
+    print(df.shape)
+    df.rename(columns={'addressId' : 'purchase_address'}, inplace=True)
+
+    df['cross_sell'] = np.where(df['retailerId'] == df['app_retailer'], 0, 1)
 
     return df   
 

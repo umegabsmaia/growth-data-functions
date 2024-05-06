@@ -2,14 +2,14 @@ import warnings
 import pandas as pd
 from google.cloud import bigquery
 from google.cloud import bigquery_storage
-from growth_data_functions.queries.new_queries.build_rfm_clients_query import build_rfm_clients_query
+from growth_data_functions.queries.new_queries.build_rfm_query import build_rfm_query
 
 warnings.filterwarnings("ignore")
 
-def get_rfm_clients_data(
-    project: str = 'prd-ume-data',
-    database: str = 'reports',
-    table: str = 'rfm_clients'
+def get_rfm_data(
+    project: str = 'ume-behavior-dev',
+    database: str = 'ume_data_useast1',
+    table: str = 'rfm'
 ) -> pd.DataFrame:
     
     """ 
@@ -47,7 +47,7 @@ def get_rfm_clients_data(
     bqstorageclient = bigquery_storage.BigQueryReadClient()
 
     # create the renegotiation query
-    query = build_rfm_clients_query(project, database, table)
+    query = build_rfm_query(project, database, table)
  
     # Download the data
     df = bqclient.query(query) \

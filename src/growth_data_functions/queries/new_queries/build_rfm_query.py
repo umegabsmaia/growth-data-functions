@@ -1,4 +1,4 @@
-def build_rfm_clients_query(
+def build_rfm_query(
         project: str,
         database: str,
         table: str
